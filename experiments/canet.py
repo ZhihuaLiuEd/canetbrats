@@ -79,9 +79,9 @@ else:
 
 class CANetOutput(Backbone):
 
-    def __init__(self, nclass, backbone, norm_layer=BatchNorm3d, **kwargs):
-        super(CANetOutput, self).__init__(nclass, backbone, norm_layer=norm_layer, **kwargs)
-        self.seg_prob = CANet(240, nclass, norm_layer)
+    def __init__(self, backbone, **kwargs):
+        super(CANetOutput, self).__init__(backbone, **kwargs)
+        self.seg_prob = CANet(240)
 
     def forward(self, x):
 
@@ -92,15 +92,15 @@ class CANetOutput(Backbone):
         return x
 
 class CANet(nn.Module):
-    def __init__(self, in_channels, norm_layer):
+    def __init__(self, in_channels):
         super(CANet, self).__init__()
         inter_channels = in_channels // 2
         self.conv5a = nn.Sequential(nn.Conv3d(in_channels, inter_channels, 3, padding=1, bias=False),
-                                    norm_layer(inter_channels),
+                                    BatchNorm3d(inter_channels),
                                     nn.ReLU())
 
         self.conv5c = nn.Sequential(nn.Conv3d(in_channels, inter_channels, 3, padding=1, bias=False),
-                                    norm_layer(inter_channels),
+                                    BatchNorm3d(inter_channels),
                                     nn.ReLU())
 
         self.gcn = nn.Sequential(OrderedDict([("FeatureInteractionGraph%02d" % i,
@@ -160,6 +160,6 @@ class CANet(nn.Module):
 
         return out
 
-net = CANetOutput(nclass=3, backbone='unet_encoder', root='./pretrain_models')
+net = CANetOutput(backbone='unet_encoder', root='./pretrain_models')
 optimizer = optim.Adam(net.parameters(), lr=INITIAL_LR, weight_decay=L2_REGULARIZER)
 lr_sheudler = optim.lr_scheduler.MultiStepLR(optimizer, [100, 130, 160], 0.2)
