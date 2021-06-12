@@ -79,8 +79,8 @@ else:
 
 class CANetOutput(Backbone):
 
-    def __init__(self, backbone, **kwargs):
-        super(CANetOutput, self).__init__(backbone, **kwargs)
+    def __init__(self, backbone):
+        super(CANetOutput, self).__init__(backbone)
         self.seg_prob = CANet(240)
 
     def forward(self, x):
@@ -160,6 +160,6 @@ class CANet(nn.Module):
 
         return out
 
-net = CANetOutput(backbone='unet_encoder', root='./pretrain_models')
+net = CANetOutput(backbone='unet_encoder')
 optimizer = optim.Adam(net.parameters(), lr=INITIAL_LR, weight_decay=L2_REGULARIZER)
 lr_sheudler = optim.lr_scheduler.MultiStepLR(optimizer, [100, 130, 160], 0.2)

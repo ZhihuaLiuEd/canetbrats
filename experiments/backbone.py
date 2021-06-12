@@ -7,9 +7,9 @@ up_kwargs = {'mode': 'bilinear', 'align_corners': True}
 __all__ = ['Backbone']
 
 class Backbone(nn.Module):
-    def __init__(self, nclass, backbone):
+    def __init__(self, backbone):
         super(Backbone, self).__init__()
-        self.nclass = nclass
+        #self.nclass = nclass
 
         if backbone == 'resnet3d18':
             self.pretrained = resnet3d18()
