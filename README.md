@@ -91,6 +91,9 @@ If you find CANet useful in your research, please consider citing:
         author={Liu, Zhihua and Tong, Lei and Chen, Long and Zhou, Feixiang and Jiang, Zheheng and Zhang, Qianni and Wang, Yinhai and Shan, Caifeng and Li, Ling and Zhou, Huiyu},
         journal={IEEE Transactions on Medical Imaging},
         year={2021},
-        publisher={IEEE}
+        volume={40},
+        number={7},
+        pages={1763-1777}
+        doi={10.1109/TMI.2021.3065918}
 }
 ```
